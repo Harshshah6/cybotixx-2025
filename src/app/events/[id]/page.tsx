@@ -1,34 +1,37 @@
-"use client"
-import { use, useState } from 'react'
-import { Calendar, Users, Clock, Trophy, ArrowLeft, CheckCircle, AlertCircle, Star } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { use } from 'react'
+import { Calendar, Users, Trophy, ArrowLeft, CheckCircle, AlertCircle, Star } from 'lucide-react'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import Link from 'next/link'
-import { toast } from 'sonner'
+import RenderEnrollmentStatus from '@/components/(events)/RenderEnrollmentStatus'
 
 type EventStatus = 'upcoming' | 'live' | 'ended'
+export type eventDataType = {
+    id: number;
+    title: string;
+    date: string;
+    time: string;
+    participants: number;
+    maxParticipants: number;
+    status: EventStatus;
+    description: string;
+    longDescription: string;
+    prize: string;
+    difficulty: string;
+    tags: string[];
+    rules: string[];
+    schedule: {
+        time: string;
+        activity: string;
+    }[];
+    requirements: string[];
+    winners: never[];
+};
 
-const EventDetail = ({
-    params,
-}: {
-    params: Promise<{ id: string }>
-}) => {
+const EventDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = use(params);
 
-    const [isEnrolled, setIsEnrolled] = useState(false)
-    const [showEnrollForm, setShowEnrollForm] = useState(false)
-    const [enrollForm, setEnrollForm] = useState({
-        name: '',
-        email: '',
-        rollNumber: '',
-        experience: '',
-        motivation: ''
-    })
-
     // Mock event data (in real app, fetch from API)
-    const event = {
+    const event: eventDataType = {
         id: parseInt(id || '1'),
         title: "Code Sprint Challenge",
         date: "Dec 25, 2024",
@@ -68,104 +71,6 @@ Whether you're a beginner looking to challenge yourself or an experienced coder 
             "Competitive programming experience (preferred)"
         ],
         winners: []
-    }
-
-    const handleEnroll = (e: React.FormEvent) => {
-        e.preventDefault()
-
-        // Simulate enrollment
-        setIsEnrolled(true)
-        setShowEnrollForm(false)
-
-        toast("Enrollment Successful! 🎉", {
-            description: "You've been successfully enrolled in the event. Check your email for confirmation details.",
-        })
-
-        // Reset form
-        setEnrollForm({
-            name: '',
-            email: '',
-            rollNumber: '',
-            experience: '',
-            motivation: ''
-        })
-    }
-
-    const handleInputChange = (field: string, value: string) => {
-        setEnrollForm(prev => ({ ...prev, [field]: value }))
-    }
-
-    const renderEnrollmentSection = () => {
-        if (isEnrolled) {
-            return (
-                <div className="text-center space-y-4">
-                    <CheckCircle className="w-12 h-12 text-green-400 mx-auto" />
-                    <h3 className="text-lg font-semibold text-foreground">You&apos;re Enrolled!</h3>
-                    <p className="text-sm text-muted-foreground">
-                        Check your email for event details and updates.
-                    </p>
-                    <Button className="w-full" variant="outline">
-                        View My Events
-                    </Button>
-                </div>
-            )
-        }
-
-        if (event.status === 'upcoming') {
-            return (
-                <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-foreground text-center">
-                        Ready to Compete?
-                    </h3>
-                    <div className="space-y-2 text-sm text-muted-foreground">
-                        <div className="flex justify-between">
-                            <span>Spots Available:</span>
-                            <span className="text-primary font-medium">
-                                {event.maxParticipants - event.participants}
-                            </span>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-2">
-                            <div
-                                className="h-2 bg-gradient-to-r from-primary to-accent rounded-full"
-                                style={{ width: `${(event.participants / event.maxParticipants) * 100}%` }}
-                            />
-                        </div>
-                    </div>
-                    <Button
-                        className="btn-cyber w-full"
-                        onClick={() => setShowEnrollForm(true)}
-                    >
-                        Enroll Now
-                    </Button>
-                </div>
-            )
-        }
-
-        if (event.status === 'live') {
-            return (
-                <div className="text-center space-y-4">
-                    <AlertCircle className="w-12 h-12 text-accent mx-auto animate-pulse" />
-                    <h3 className="text-lg font-semibold text-foreground">Event is Live!</h3>
-                    <p className="text-sm text-muted-foreground">
-                        The event has already started. Contact organizers for late entry.
-                    </p>
-                    <Button className="btn-cyber w-full animate-pulse-glow">
-                        Join Live Event
-                    </Button>
-                </div>
-            )
-        }
-
-        // Default case for ended events
-        return (
-            <div className="text-center space-y-4">
-                <Clock className="w-12 h-12 text-muted-foreground mx-auto" />
-                <h3 className="text-lg font-semibold text-foreground">Event Ended</h3>
-                <p className="text-sm text-muted-foreground">
-                    This event has concluded. Check out the winners below!
-                </p>
-            </div>
-        )
     }
 
     return (
@@ -224,11 +129,7 @@ Whether you're a beginner looking to challenge yourself or an experienced coder 
                         </div>
 
                         {/* Enrollment Section */}
-                        <div className="lg:w-80">
-                            <div className="cyber-card">
-                                {renderEnrollmentSection()}
-                            </div>
-                        </div>
+                        <RenderEnrollmentStatus event={event} />
                     </div>
                 </div>
 
@@ -309,80 +210,6 @@ Whether you're a beginner looking to challenge yourself or an experienced coder 
                     </div>
                 </div>
 
-                {/* Enrollment Modal */}
-                {showEnrollForm && (
-                    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                        <div className="bg-card border border-border rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-                            <h3 className="text-xl font-semibold text-foreground mb-4">Enroll in {event.title}</h3>
-
-                            <form onSubmit={handleEnroll} className="space-y-4">
-                                <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">Full Name *</label>
-                                    <Input
-                                        required
-                                        value={enrollForm.name}
-                                        onChange={(e) => handleInputChange('name', e.target.value)}
-                                        placeholder="Enter your full name"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">Email *</label>
-                                    <Input
-                                        type="email"
-                                        required
-                                        value={enrollForm.email}
-                                        onChange={(e) => handleInputChange('email', e.target.value)}
-                                        placeholder="Enter your email address"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">Roll Number *</label>
-                                    <Input
-                                        required
-                                        value={enrollForm.rollNumber}
-                                        onChange={(e) => handleInputChange('rollNumber', e.target.value)}
-                                        placeholder="Enter your roll number"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">Programming Experience</label>
-                                    <Input
-                                        value={enrollForm.experience}
-                                        onChange={(e) => handleInputChange('experience', e.target.value)}
-                                        placeholder="e.g., 2 years, Beginner, etc."
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="text-sm font-medium text-foreground mb-2 block">Why do you want to participate?</label>
-                                    <Textarea
-                                        value={enrollForm.motivation}
-                                        onChange={(e) => handleInputChange('motivation', e.target.value)}
-                                        placeholder="Tell us what motivates you to join this event..."
-                                        rows={3}
-                                    />
-                                </div>
-
-                                <div className="flex gap-3 pt-4">
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        onClick={() => setShowEnrollForm(false)}
-                                        className="flex-1"
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button type="submit" className="btn-cyber flex-1">
-                                        Enroll Now
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                )}
             </div>
         </LayoutWrapper>
     )

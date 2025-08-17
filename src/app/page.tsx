@@ -77,17 +77,17 @@ const HomePage = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <Link href="/events">
-              <Button className="btn-cyber">
+            <Button asChild className="btn-cyber">
+              <Link href="/events">
                 Explore Events
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
-            <Link href="/community">
-              <Button className="btn-outline-cyber">
+              </Link>
+            </Button>
+            <Button asChild className="btn-outline-cyber">
+              <Link href="/community">
                 Join Community
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </section>
 
@@ -167,12 +167,12 @@ const HomePage = () => {
                 Don&apos;t miss out on these exciting opportunities to showcase your skills
               </p>
             </div>
-            <Link href="/events">
-              <Button variant="outline" className="hidden sm:flex border-primary text-primary hover:bg-primary hover:text-white">
+            <Button asChild variant="outline" className="hidden sm:flex border-primary text-primary hover:bg-primary hover:text-white">
+              <Link href="/events">
                 View All Events
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -207,28 +207,29 @@ const HomePage = () => {
                   </div>
                 </div>
 
-                <Link href={`/events/${event.id}`}>
-                  <Button
-                    className={`w-full ${event.status === 'live' ? 'btn-cyber' : 'btn-outline-cyber'}`}
-                  >
+                <Button
+                  className={`w-full ${event.status === 'live' ? 'btn-cyber' : 'btn-outline-cyber'}`}
+                  asChild
+                >
+                  <Link href={`/events/${event.id}`}>
                     {event.status === 'live' ? 'Join Now' : 'Learn More'}
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             ))}
           </div>
 
           <div className="text-center sm:hidden">
-            <Link href="/events">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+            <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white" asChild>
+              <Link href="/events">
                 View All Events
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </section>
-      </div>
-    </LayoutWrapper>
+      </div >
+    </LayoutWrapper >
   )
 };
 

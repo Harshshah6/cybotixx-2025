@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button'
-import { Code2, Calendar, Trophy, Users, Bell, X, Menu } from 'lucide-react'
+import { Code2, Calendar, Trophy, Bell, X, Menu } from 'lucide-react'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
@@ -13,7 +13,6 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
         { name: 'Dashboard', href: '/', icon: Code2 },
         { name: 'Events', href: '/events', icon: Calendar },
         { name: 'Leaderboard', href: '/leaderboard', icon: Trophy },
-        { name: 'Community', href: '/community', icon: Users },
     ]
 
     const isActive = (href: string) => {

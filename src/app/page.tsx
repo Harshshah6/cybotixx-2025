@@ -1,65 +1,16 @@
 import Announcements from "@/components/Announcements";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import { Button } from "@/components/ui/button";
-import { Users, Calendar, Trophy, Code, Zap, Target, Rocket, ArrowRight } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Users, Calendar, Code, Target, Rocket, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { Badge } from "@/components/ui/badge";
+import { LandingPageConstants } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 const HomePage = () => {
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "Code Sprint Challenge",
-      date: "Dec 25, 2024",
-      time: "10:00 AM",
-      participants: 45,
-      status: "upcoming" as const,
-      description: "Fast-paced coding competition with algorithmic challenges"
-    },
-    {
-      id: 2,
-      title: "Web Dev Hackathon",
-      date: "Jan 15, 2025",
-      time: "9:00 AM",
-      participants: 32,
-      status: "upcoming" as const,
-      description: "24-hour hackathon to build innovative web applications"
-    },
-    {
-      id: 3,
-      title: "AI/ML Workshop",
-      date: "Dec 20, 2024",
-      time: "2:00 PM",
-      participants: 28,
-      status: "live" as const,
-      description: "Hands-on workshop on machine learning fundamentals"
-    }
-  ]
-
-  const stats = [
-    { label: "Active Members", value: "150+", icon: Users, color: "text-blue-600" },
-    { label: "Events Hosted", value: "25", icon: Calendar, color: "text-purple-600" },
-    { label: "Competitions Won", value: "12", icon: Trophy, color: "text-green-600" },
-    { label: "Projects Built", value: "89", icon: Code, color: "text-orange-600" },
-  ]
-
-  const features = [
-    {
-      icon: Zap,
-      title: "Learn by Competing",
-      description: "Sharpen your skills through exciting coding competitions and challenges"
-    },
-    {
-      icon: Target,
-      title: "Track Progress",
-      description: "Monitor your improvement with detailed analytics and performance metrics"
-    },
-    {
-      icon: Rocket,
-      title: "Build Together",
-      description: "Collaborate on projects and learn from fellow developers in our community"
-    }
-  ]
 
   return (
     <LayoutWrapper>
@@ -83,25 +34,27 @@ const HomePage = () => {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
-            <Button asChild className="btn-outline-cyber">
+            {/* <Button asChild className="btn-outline-cyber">
               <Link href="/community">
                 Join Community
+                <Users className="w-4 h-4 ml-2" />
               </Link>
-            </Button>
+            </Button> */}
           </div>
         </section>
 
         {/* Stats Section */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((stat, index) => {
+          {LandingPageConstants.cybotixxStats.map((stat, index) => {
             const Icon = stat.icon
             return (
               <div
-                key={stat.label}
-                className="hover:border-primary/30 hover:shadow-lg bg-card border rounded-xl p-6 duration-300 shadow-sm text-center hover:scale-101"
-                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                key={index}
+                className={cn(
+                  "bg-card border duration-300 rounded-xl p-6 shadow-sm text-center"
+                )}
               >
-                <Icon className={`w-8 h-8 ${stat.color} mx-auto mb-3`} />
+                <Icon className={`size-8 ${stat.color} mx-auto mb-3`} />
                 <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">
                   {stat.value}
                 </div>
@@ -132,7 +85,7 @@ const HomePage = () => {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
-              {features.map((feature, index) => {
+              {LandingPageConstants.cybotixxFeatures.map((feature, index) => {
                 const Icon = feature.icon
                 return (
                   <div
@@ -176,7 +129,7 @@ const HomePage = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingEvents.map((event, index) => (
+            {LandingPageConstants.upcomingEvents.map((event, index) => (
               <div
                 key={event.id}
                 className="event-card flex flex-col animate-fade-in hover:scale-105 transition-all duration-300"
@@ -228,6 +181,105 @@ const HomePage = () => {
             </Button>
           </div>
         </section>
+
+        {/* About Section */}
+        <section className="space-y-12">
+          <div className="text-center space-y-6">
+            <div className="flex justify-center">
+              <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center shadow-lg">
+                <Code className="w-12 h-12 text-white" />
+              </div>
+            </div>
+            <div>
+              <h2 className="text-4xl font-bold text-foreground mb-4">About Cybotixx</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                We are a passionate community of BCA students dedicated to exploring technology,
+                building innovative projects, and fostering a culture of continuous learning and growth.
+              </p>
+            </div>
+          </div>
+
+          {/* Mission & Vision */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card className="border shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Target className="w-6 h-6 text-primary" />
+                  <span>Our Mission</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  To create an inclusive environment where BCA students can enhance their technical skills,
+                  collaborate on innovative projects, and prepare for successful careers in technology.
+                  We aim to bridge the gap between academic learning and industry requirements.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Rocket className="w-6 h-6 text-primary" />
+                  <span>Our Vision</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  To become the leading student technology community that empowers the next generation
+                  of developers, innovators, and tech leaders. We envision a future where every member
+                  graduates with confidence, skills, and connections to thrive in the tech industry.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Core Values */}
+          <div className="space-y-6">
+            <h3 className="text-3xl font-bold text-center">Our Core Values</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {LandingPageConstants.coreValues.map((value) => {
+                const Icon = value.icon
+                return (
+                  <Card key={value.title} className="text-center border shadow hover:shadow-lg transition-shadow">
+                    <CardContent className="p-6">
+                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <Icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <h4 className="font-semibold mb-2">{value.title}</h4>
+                      <p className="text-sm text-muted-foreground">{value.description}</p>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Team Section */}
+          <div className="space-y-6">
+            <h3 className="text-3xl font-bold text-center">Meet Our Team</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {LandingPageConstants.teamMembers.map((member) => (
+                <Card key={member.name} className="text-center border shadow">
+                  <CardContent className="p-2 md:p-6">
+                    <Avatar className="w-20 h-20 mx-auto mb-4">
+                      <AvatarImage src={member.image} alt={member.name} />
+                      <AvatarFallback>
+                        {member.name.split(' ').map(n => n[0]).join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <h4 className="font-semibold">{member.name}</h4>
+                    <Badge variant="secondary" className="mb-2">
+                      {member.role}
+                    </Badge>
+                    <p className="text-sm text-muted-foreground">{member.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
       </div >
     </LayoutWrapper >
   )

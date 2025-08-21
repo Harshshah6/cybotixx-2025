@@ -91,11 +91,11 @@ const Announcements = () => {
                 })}
             </div>
 
-            <div className="text-center">
+            {/* <div className="text-center">
                 <button className="text-sm text-primary hover:text-primary/80 font-medium transition-colors">
                     View All Announcements
                 </button>
-            </div>
+            </div> */}
         </div>
     )
 }

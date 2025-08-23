@@ -113,7 +113,7 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                                 <Code2 className="w-4 h-4 text-white" />
                             </div>
                             <span className="text-sm text-muted-foreground">
-                                © 2024 Cybotixx - BCA Department. Building the future, one code at a time.
+                                © {new Date().getFullYear()} Cybotixx - BCA Department.
                             </span>
                         </div>
                         <div className="text-sm text-muted-foreground">

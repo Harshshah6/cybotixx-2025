@@ -3,6 +3,7 @@ import SearchAndFilterSection from '@/components/(events)/SearchAndFilterSection
 import EventsGrid from '@/components/(events)/EventsGrid';
 import { Search } from 'lucide-react';
 import { Suspense } from 'react';
+import { getEventsAction } from '@/actions/event';
 
 const Events = () => {
     return (
@@ -25,8 +26,7 @@ const Events = () => {
 
                 {/* Events Grid */}
                 <Suspense>
-                    <EventsGrid
-                        fallBack={fallbackUI()} />
+                    <EventsGrid events={getEventsAction()} fallBack={fallbackUI()} />
                 </Suspense>
             </div>
         </LayoutWrapper>

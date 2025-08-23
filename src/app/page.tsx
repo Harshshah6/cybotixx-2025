@@ -1,14 +1,16 @@
-import Announcements from "@/components/Announcements";
+import { Announcements } from "@/components/Announcements";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Users, Calendar, Code, Target, Rocket, ArrowRight } from "lucide-react";
+import { Code, Target, Rocket, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import React from "react";
-import { Badge } from "@/components/ui/badge";
+import React, { Suspense } from "react";
 import { LandingPageConstants } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import UpcomingEvents, { UpcomingEventsSkeleton } from "@/components/(landing)/UpcomingEvents";
+import { getEventsAction } from "@/actions/event";
+import { getTeamsAction } from "@/actions/team";
+import TeamMembers, { TeamMembersSkeleton } from "@/components/(landing)/TeamMembers";
 
 const HomePage = () => {
 
@@ -34,12 +36,6 @@ const HomePage = () => {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
-            {/* <Button asChild className="btn-outline-cyber">
-              <Link href="/community">
-                Join Community
-                <Users className="w-4 h-4 ml-2" />
-              </Link>
-            </Button> */}
           </div>
         </section>
 
@@ -129,47 +125,9 @@ const HomePage = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {LandingPageConstants.upcomingEvents.map((event, index) => (
-              <div
-                key={event.id}
-                className="event-card flex flex-col animate-fade-in hover:scale-105 transition-all duration-300"
-                style={{ animationDelay: `${0.7 + index * 0.1}s` }}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-foreground mb-2">
-                      {event.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      {event.description}
-                    </p>
-                  </div>
-                  <span className={`badge-${event.status} ml-3`}>
-                    {event.status === 'live' ? '🔴 Live' : '⏳ Upcoming'}
-                  </span>
-                </div>
-
-                <div className="space-y-2 flex-1 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    {event.date} at {event.time}
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="w-4 h-4 mr-2" />
-                    {event.participants} participants
-                  </div>
-                </div>
-
-                <Button
-                  className={`w-full ${event.status === 'live' ? 'btn-cyber' : 'btn-outline-cyber'}`}
-                  asChild
-                >
-                  <Link href={`/events/${event.id}`}>
-                    {event.status === 'live' ? 'Join Now' : 'Learn More'}
-                  </Link>
-                </Button>
-              </div>
-            ))}
+            <Suspense fallback={<UpcomingEventsSkeleton />}>
+              <UpcomingEvents events={getEventsAction()} />
+            </Suspense>
           </div>
 
           <div className="text-center sm:hidden">
@@ -259,23 +217,9 @@ const HomePage = () => {
           <div className="space-y-6">
             <h3 className="text-3xl font-bold text-center">Meet Our Team</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {LandingPageConstants.teamMembers.map((member) => (
-                <Card key={member.name} className="text-center border shadow">
-                  <CardContent className="p-2 md:p-6">
-                    <Avatar className="w-20 h-20 mx-auto mb-4">
-                      <AvatarImage src={member.image} alt={member.name} />
-                      <AvatarFallback>
-                        {member.name.split(' ').map(n => n[0]).join('')}
-                      </AvatarFallback>
-                    </Avatar>
-                    <h4 className="font-semibold">{member.name}</h4>
-                    <Badge variant="secondary" className="mb-2">
-                      {member.role}
-                    </Badge>
-                    <p className="text-sm text-muted-foreground">{member.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
+              <Suspense fallback={<TeamMembersSkeleton />}>
+                <TeamMembers teams={getTeamsAction()} />
+              </Suspense>
             </div>
           </div>
         </section>

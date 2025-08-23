@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import EnrollmentFormModal from './EnrollmentFormModal'
 import { CheckCircle, AlertCircle, Clock } from 'lucide-react'
 import { Button } from '../ui/button'
-import { eventDataType } from '@/app/events/[id]/page'
+import { EventSelectType } from '@/types/db-tables.types'
 
-export default function RenderEnrollmentStatus({ event }: { event: eventDataType }) {
+export default function RenderEnrollmentStatus({ event }: { event: EventSelectType }) {
     const [showEnrollForm, setShowEnrollForm] = useState(false)
-    const [isEnrolled,setIsEnrolled] = useState(false)
+    const [isEnrolled, setIsEnrolled] = useState(false)
 
     const renderEnrollmentSection = () => {
         if (isEnrolled) {
@@ -25,7 +25,7 @@ export default function RenderEnrollmentStatus({ event }: { event: eventDataType
             )
         }
 
-        if (event.status === 'upcoming') {
+        if (event.event_status === 'upcoming') {
             return (
                 <div className="space-y-4">
                     <h3 className="text-lg font-semibold text-foreground text-center">
@@ -35,13 +35,13 @@ export default function RenderEnrollmentStatus({ event }: { event: eventDataType
                         <div className="flex justify-between">
                             <span>Spots Available:</span>
                             <span className="text-primary font-medium">
-                                {event.maxParticipants - event.participants}
+                                {(event.max_participants ?? event.participants.length + 1) - event.participants.length}
                             </span>
                         </div>
                         <div className="w-full bg-muted rounded-full h-2">
                             <div
                                 className="h-2 bg-gradient-to-r from-primary to-accent rounded-full"
-                                style={{ width: `${(event.participants / event.maxParticipants) * 100}%` }}
+                                style={{ width: `${(event.participants.length / (event.max_participants ?? 1)) * 100}%` }}
                             />
                         </div>
                     </div>
@@ -55,10 +55,10 @@ export default function RenderEnrollmentStatus({ event }: { event: eventDataType
             )
         }
 
-        if (event.status === 'live') {
+        if (event.event_status === 'ongoing') {
             return (
                 <div className="text-center space-y-4">
-                    <AlertCircle className="w-12 h-12 text-accent mx-auto animate-pulse" />
+                    <AlertCircle className="w-12 h-12 mx-auto animate-pulse" />
                     <h3 className="text-lg font-semibold text-foreground">Event is Live!</h3>
                     <p className="text-sm text-muted-foreground">
                         The event has already started. Contact organizers for late entry.

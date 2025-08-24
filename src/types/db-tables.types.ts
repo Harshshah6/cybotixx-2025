@@ -1,13 +1,32 @@
-import { event, announcement, participant, team, } from "@/lib/auth/schema"
+import { getParticipantsAction } from "@/actions/participants";
+import { event, announcement, participants, team, user, winners } from "@/lib/db/schema";
 
-export type EventSelectType = typeof event.$inferSelect & { participants: ParticipantSelectType[], winners: ParticipantSelectType[] };
-export type EventInsertType = typeof event.$inferInsert;
+type WithRelations<T, R> = T & R;
 
-export type AnnouncementSelectType = typeof announcement.$inferSelect;
-export type AnnouncementInsertType = typeof announcement.$inferInsert;
+export type EventBase = typeof event.$inferSelect;
+export type EventInsert = typeof event.$inferInsert;
 
-export type ParticipantSelectType = typeof participant.$inferSelect;
-export type ParticipantInsertType = typeof participant.$inferInsert;
+export type WinnerBase = typeof winners.$inferSelect;
+export type WinnerInsert = typeof winners.$inferInsert;
 
-export type TeamSelectType = typeof team.$inferSelect;
-export type TeamInsertType = typeof team.$inferInsert;
+export type AnnouncementBase = typeof announcement.$inferSelect;
+export type AnnouncementInsert = typeof announcement.$inferInsert;
+
+export type ParticipantBase = typeof participants.$inferSelect;
+export type ParticipantInsert = typeof participants.$inferInsert;
+
+export type TeamBase = typeof team.$inferSelect;
+export type TeamInsert = typeof team.$inferInsert;
+
+export type UserBase = typeof user.$inferSelect;
+export type UserInsert = typeof user.$inferInsert;
+
+
+export type ParticipantsWithRelations = Awaited<ReturnType<typeof getParticipantsAction>>[number];
+
+export type WinnerWithRelations = WithRelations<WinnerBase, { user: UserBase; event: EventBase }>;
+
+export type EventWithRelations = WithRelations<EventBase, { participants: ParticipantBase[]; winners: WinnerBase[] }>;
+
+export type UserWithRelations = WithRelations<UserBase, { participants: ParticipantBase[]; winners: WinnerBase[] }
+>;

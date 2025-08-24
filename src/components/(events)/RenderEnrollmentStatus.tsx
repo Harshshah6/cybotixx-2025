@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import EnrollmentFormModal from './EnrollmentFormModal'
 import { CheckCircle, AlertCircle, Clock } from 'lucide-react'
 import { Button } from '../ui/button'
-import { EventSelectType } from '@/types/db-tables.types'
+import { EventWithRelations } from '@/types/db-tables.types'
 
-export default function RenderEnrollmentStatus({ event }: { event: EventSelectType }) {
+export default function RenderEnrollmentStatus({ event }: { event: EventWithRelations }) {
     const [showEnrollForm, setShowEnrollForm] = useState(false)
     const [isEnrolled, setIsEnrolled] = useState(false)
 

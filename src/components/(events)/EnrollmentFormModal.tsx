@@ -5,9 +5,9 @@ import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 import { toast } from 'sonner'
-import { EventSelectType } from '@/types/db-tables.types';
+import { EventBase } from '@/types/db-tables.types';
 
-export default function EnrollmentFormModal({ event, setIsEnrolled, setShowEnrollForm }: { event: EventSelectType, isEnrolled: boolean, setIsEnrolled: React.Dispatch<React.SetStateAction<boolean>>, setShowEnrollForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function EnrollmentFormModal({ event, setIsEnrolled, setShowEnrollForm }: { event: EventBase, isEnrolled: boolean, setIsEnrolled: React.Dispatch<React.SetStateAction<boolean>>, setShowEnrollForm: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [enrollForm, setEnrollForm] = useState({
         name: '',
         email: '',

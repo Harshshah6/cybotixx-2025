@@ -1,36 +1,40 @@
 'use server';
 
-import { db } from "@/lib/auth/db";
+import { db } from "@/lib/db/db";
 
 export const getEventsAction = async () => {
     const results = await db.query.event.findMany({
         with: {
-            participants: true,
+            participants: {
+                with: {
+                    user: true,
+                },
+            },
             winners: {
                 with: {
-                    event: true
-                }
+                    user: true,
+                },
             },
-        }
+        },
     });
-    if (results) {
-        return results;
-    } else {
-        return [];
-    }
+    return results ?? [];
 };
 
 export const getEventByIdAction = async (id: number) => {
-    const result = await db.query.event.findMany({
+    const result = await db.query.event.findFirst({
         where: (event, { eq }) => (eq(event.id, id)),
         with: {
-            participants: true,
+            participants: {
+                with: {
+                    user: true,
+                },
+            },
             winners: {
                 with: {
-                    event: true
-                }
+                    user: true,
+                },
             },
-        }
+        },
     });
-    return result[0];
+    return result;
 };

@@ -4,9 +4,9 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Calendar, Clock, Users, Trophy, Award, ArrowRight, Zap } from 'lucide-react';
 import { useQueryState, parseAsString } from 'nuqs';
-import type { EventSelectType } from '@/types/db-tables.types';
+import type { EventWithRelations } from '@/types/db-tables.types';
 
-export default function EventsGrid({ events: eventsPromise, fallBack }: { events: Promise<EventSelectType[]>, fallBack: React.JSX.Element }) {
+export default function EventsGrid({ events: eventsPromise, fallBack }: { events: Promise<EventWithRelations[]>, fallBack: React.JSX.Element }) {
     const events = use(eventsPromise);
     const [searchTerm] = useQueryState('searchTerm', parseAsString.withDefault(""));
     const [filterStatus] = useQueryState('filterStatus', parseAsString.withDefault("all"));
@@ -148,7 +148,7 @@ export default function EventsGrid({ events: eventsPromise, fallBack }: { events
                                                 }`}>
                                                 {i + 1}
                                             </div>
-                                            <span className="text-foreground font-medium">{winner.name}</span>
+                                            <span className="text-foreground font-medium">{winner.userId}</span>
                                         </div>
                                     </div>
                                 ))}

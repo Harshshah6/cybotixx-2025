@@ -1,11 +1,11 @@
-import type { EventSelectType } from '@/types/db-tables.types'
+import type { EventBase } from '@/types/db-tables.types'
 import React, { use } from 'react'
 import { Users, Calendar } from "lucide-react";
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Skeleton } from '../ui/skeleton';
 
-export default function UpcomingEvents({ events: eventsPromise }: { events: Promise<EventSelectType[]> }) {
+export default function UpcomingEvents({ events: eventsPromise }: { events: Promise<EventBase[]> }) {
     const events = use(eventsPromise).slice(0, 4);
     return (
         <>

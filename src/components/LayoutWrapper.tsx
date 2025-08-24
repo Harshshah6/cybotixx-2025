@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button'
-import { Code2, Calendar, Trophy, Bell, X, Menu } from 'lucide-react'
+import { cn } from '@/lib/utils';
+import { Code2, Calendar, X, Menu } from 'lucide-react'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
@@ -12,7 +13,7 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
     const navigation = [
         { name: 'Dashboard', href: '/', icon: Code2 },
         { name: 'Events', href: '/events', icon: Calendar },
-        { name: 'Leaderboard', href: '/leaderboard', icon: Trophy },
+        // { name: 'Leaderboard', href: '/leaderboard', icon: Trophy },
     ]
 
     const isActive = (href: string) => {
@@ -59,9 +60,7 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 
                         {/* Notifications & Mobile Menu */}
                         <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="icon" className="hidden md:flex">
-                                <Bell className="w-5 h-5" />
-                            </Button>
+                            <LoginButton className="hidden md:flex" />
 
                             <Button
                                 variant="ghost"
@@ -94,6 +93,7 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                                     )
                                 })}
                             </div>
+                            <LoginButton className="mt-5" />
                         </nav>
                     )}
                 </div>
@@ -123,6 +123,16 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                 </div>
             </footer>
         </div>
+    )
+}
+
+function LoginButton({ className }: { className?: string }) {
+    return (
+        <Button asChild variant="default" className={cn("cursor-pointer", className)}>
+            <Link href="/sign-in">
+                LOGIN
+            </Link>
+        </Button>
     )
 }
 

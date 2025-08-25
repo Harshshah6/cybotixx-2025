@@ -1,10 +1,11 @@
 'use client';
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils';
 import { Code2, Calendar, X, Menu } from 'lucide-react'
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import LoginButton from './ui/custom/LoginButton';
 
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -29,14 +30,14 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                     <div className="flex items-center justify-between">
                         {/* Logo */}
                         <Link href="/" className="flex items-center space-x-3 group">
-                            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-md">
-                                <Code2 className="w-6 h-6 text-white" />
+                            <div className="w-10 h-10 relative rounded-xl flex items-center justify-center">
+                                <Image src={"/logo.png"} alt='cybotixx-logo' fill className="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <h1 className="text-2xl font-bold text-primary">
                                     CYBOTIXX
                                 </h1>
-                                <p className="text-xs text-muted-foreground -mt-1">BCA Department</p>
+                                <p className="text-xs text-muted-foreground -mt-1">Forum</p>
                             </div>
                         </Link>
 
@@ -109,15 +110,15 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                 <div className="container mx-auto px-6 py-8">
                     <div className="flex flex-col md:flex-row items-center justify-between">
                         <div className="flex items-center space-x-3 mb-4 md:mb-0">
-                            <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
-                                <Code2 className="w-4 h-4 text-white" />
+                            <div className="w-10 h-10 relative rounded-xl flex items-center justify-center">
+                                <Image src={"/logo.png"} alt='cybotixx-logo' fill className="w-6 h-6 text-white" />
                             </div>
                             <span className="text-sm text-muted-foreground">
-                                © {new Date().getFullYear()} Cybotixx - BCA Department.
+                                © {new Date().getFullYear()} Cybotixx - Forum.
                             </span>
                         </div>
-                        <div className="text-sm text-muted-foreground">
-                            Made with 💙 for our coding community
+                        <div className="text-sm text-muted-foreground relative ">
+                           <Image src="/jain-college-logo.png" alt="" width={500} height={500} className='w-50 h-12 aspect-video'/>
                         </div>
                     </div>
                 </div>
@@ -126,14 +127,5 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
     )
 }
 
-function LoginButton({ className }: { className?: string }) {
-    return (
-        <Button asChild variant="default" className={cn("cursor-pointer", className)}>
-            <Link href="/sign-in">
-                LOGIN
-            </Link>
-        </Button>
-    )
-}
 
 export default LayoutWrapper

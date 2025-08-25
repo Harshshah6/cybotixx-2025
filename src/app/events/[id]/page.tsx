@@ -1,5 +1,5 @@
 import { use } from 'react'
-import { Calendar, Users, Trophy, ArrowLeft, CheckCircle, AlertCircle, Star } from 'lucide-react'
+import { Calendar, Users, ArrowLeft, CheckCircle, AlertCircle, Star, Medal } from 'lucide-react'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import Link from 'next/link'
 import RenderEnrollmentStatus from '@/components/(events)/RenderEnrollmentStatus'
@@ -53,9 +53,9 @@ const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
                                             <div className="text-xs text-muted-foreground">Participants</div>
                                         </div>
                                         <div className="cyber-card text-center py-4">
-                                            <Trophy className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
-                                            <div className="text-sm font-medium text-foreground">NULL</div>
-                                            <div className="text-xs text-muted-foreground">Prize Pool</div>
+                                            <Medal className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
+                                            <div className="text-sm font-medium text-foreground">Prize</div>
+                                            <div className="text-xs text-muted-foreground">Certificate</div>
                                         </div>
                                         <div className="cyber-card text-center py-4">
                                             <Star className="w-6 h-6 text-orange-400 mx-auto mb-2" />

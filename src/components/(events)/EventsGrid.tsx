@@ -86,10 +86,10 @@ export default function EventsGrid({ events: eventsPromise, fallBack }: { events
                                 <Users className="w-4 h-4 mr-2 text-primary" />
                                 {event.participants.length}/{event.max_participants}
                             </div>
-                            <div className="flex items-center text-muted-foreground">
+                            {/* <div className="flex items-center text-muted-foreground">
                                 <Trophy className="w-4 h-4 mr-2 text-primary" />
                                 NULL
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Participation Progress */}

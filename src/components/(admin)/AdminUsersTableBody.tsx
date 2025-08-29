@@ -1,26 +1,23 @@
-import { ParticipantsWithRelations } from '@/types/db-tables.types'
+import { UserWithRelations } from '@/types/db-tables.types'
 import { Eye, Edit, Trash2 } from 'lucide-react';
 import React, { use } from 'react'
 import { TableRow, TableCell } from '../ui/table';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 
-export default function AdminUsersTableBody({ usersPromise }: { usersPromise: Promise<ParticipantsWithRelations[]> }) {
+export default function AdminUsersTableBody({ usersPromise }: { usersPromise: Promise<UserWithRelations[]> }) {
     const users = use(usersPromise);
+    console.log(users);
+    
     return (
         <>
-            {users.map(({ user }) => (
-                <TableRow key={user.id}>
+            {users.map((user, idx) => (
+                <TableRow key={idx}>
                     <TableCell className="font-medium">{user.name}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>
                         <Badge variant={"default"}>
-                            {"default"}
-                        </Badge>
-                    </TableCell>
-                    <TableCell>
-                        <Badge variant={'default'}>
-                            Active
+                            {user.role}
                         </Badge>
                     </TableCell>
                     <TableCell>

@@ -8,6 +8,7 @@ import { enrollForAnEventAction } from "@/actions/participants";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
+import { useLoaderContext } from "../ui/custom/MLoader";
 
 export default function RenderEnrollmentStatus({
   event,
@@ -18,6 +19,7 @@ export default function RenderEnrollmentStatus({
   const [isEnrolled, setIsEnrolled] = useState(false);
   const router = useRouter();
   const { data, isPending } = useSession();
+  const {setIsLoading} = useLoaderContext();
 
   if (isPending) {
     return <></>;
@@ -44,9 +46,11 @@ export default function RenderEnrollmentStatus({
     }
 
     const handleEnrollButton = async () => {
+      setIsLoading(true);
       const result = await enrollForAnEventAction(event.id);
       if (result.ok) {
         setIsEnrolled(true);
+        setIsLoading(false);
         router.refresh();
         return;
       }
@@ -54,12 +58,15 @@ export default function RenderEnrollmentStatus({
       if (result.error === "roll-not-found") {
         toast("Roll Number Not Setup.");
         router.push("/profile-setup");
+        setIsLoading(false);
         return;
       } else if (result.error === "not-auth") {
         router.push("/sign-in");
+        setIsLoading(false);
         return;
       }
       toast(result.error);
+      setIsLoading(false);
     };
 
     if (event.event_status === "upcoming") {
@@ -80,11 +87,10 @@ export default function RenderEnrollmentStatus({
               <div
                 className="h-2 bg-gradient-to-r from-primary to-accent rounded-full"
                 style={{
-                  width: `${
-                    (event.participants.length /
-                      (event.max_participants ?? 1)) *
+                  width: `${(event.participants.length /
+                    (event.max_participants ?? 1)) *
                     100
-                  }%`,
+                    }%`,
                 }}
               />
             </div>
@@ -109,7 +115,7 @@ export default function RenderEnrollmentStatus({
           <p className="text-sm text-muted-foreground">
             The event has already started. Contact organizers for late entry.
           </p>
-          <Button className="btn-cyber w-full animate-pulse-glow"onClick={handleEnrollButton}>
+          <Button className="btn-cyber w-full animate-pulse-glow" onClick={handleEnrollButton}>
             Join Live Event
           </Button>
         </div>

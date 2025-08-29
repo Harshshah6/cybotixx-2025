@@ -25,3 +25,17 @@ export const userProfileCompleteAction = async (data: { roll_number: string; pho
         return { ok: false }
     }
 };
+
+export const getUsersAction = async () => {
+    try {
+        const res = await db.query.user.findMany({
+            with: {
+                winners: true,
+                participants: true,
+            }
+        });
+        return res;
+    } catch {
+        return [];
+    }
+}

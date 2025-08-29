@@ -7,8 +7,8 @@ import AdminHeader from '@/components/(admin)/AdminHeader';
 import AdminStatsCard from '@/components/(admin)/AdminStatsCard';
 import AdminEventsTableBody from '@/components/(admin)/AdminEventsTableBody'
 import { getEventsAction } from '@/actions/event'
+import { getUsersAction } from '@/actions/user'
 import AdminUsersTableBody from '@/components/(admin)/AdminUsersTableBody'
-import { getParticipantsAction } from '@/actions/participants'
 
 const Admin = () => {
     return (
@@ -44,14 +44,13 @@ const Admin = () => {
                                             <TableHead>Name</TableHead>
                                             <TableHead>Email</TableHead>
                                             <TableHead>Role</TableHead>
-                                            <TableHead>Status</TableHead>
                                             <TableHead>Events Won</TableHead>
                                             <TableHead>Events Participated</TableHead>
                                             <TableHead>Actions</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        <AdminUsersTableBody usersPromise={getParticipantsAction()} />
+                                        <AdminUsersTableBody usersPromise={getUsersAction()} />
                                     </TableBody>
                                 </Table>
                             </CardContent>

@@ -49,7 +49,7 @@ function StatItem({
 export function CybotixxStatsSkeleton() {
   return (
     <>
-      {LandingPageConstants.cybotixxStats.map((stat, index) => {
+      {(LandingPageConstants.cybotixxStats).slice(0, 3).map((stat, index) => {
         const Icon = stat.icon;
         return (
           <div

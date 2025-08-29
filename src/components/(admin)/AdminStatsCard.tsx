@@ -62,7 +62,7 @@ export default function AdminStatsCard() {
 }
 
 async function GetTotalUsers() {
-    const result = await db.query.participants.findMany();
+    const result = await db.query.user.findMany();
     return <>{result.length}</>;
 }
 
@@ -72,10 +72,6 @@ async function GetTotalEvents() {
 }
 
 async function GetTotalRegistrations() {
-    const result = await db.query.event.findMany({ with: { participants: true } });
-    let total = 0;
-    for (const event of result) {
-        total += event.participants.length;
-    }
-    return <>{total}</>;
+    const result = await db.query.participants.findMany();
+    return <>{result.length}</>;
 }

@@ -14,7 +14,7 @@ import { getTeamsAction } from "@/actions/team";
 import TeamMembers, {
   TeamMembersSkeleton,
 } from "@/components/(landing)/TeamMembers";
-import CybotixxStats, { CybotixxStatsSkeleton } from "@/components/(landing)/CybotixxStats";
+// import CybotixxStats, { CybotixxStatsSkeleton } from "@/components/(landing)/CybotixxStats";
 
 const HomePage = () => {
   return (
@@ -45,11 +45,11 @@ const HomePage = () => {
         </section>
 
         {/* Stats Section */}
-        <section className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        {/* <section className="grid grid-cols-2 md:grid-cols-3 gap-6">
           <Suspense fallback={<CybotixxStatsSkeleton/>}>
             <CybotixxStats />
           </Suspense>
-        </section>
+        </section> */}
 
         {/* Main Content Grid - Announcements & Features */}
         <section className="grid lg:grid-cols-3 gap-8">

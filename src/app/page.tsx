@@ -2,7 +2,7 @@ import { Announcements } from "@/components/Announcements";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Code, Target, Rocket, ArrowRight } from "lucide-react";
+import { Target, Rocket, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { LandingPageConstants } from "@/lib/constants";
@@ -14,6 +14,7 @@ import { getTeamsAction } from "@/actions/team";
 import TeamMembers, {
   TeamMembersSkeleton,
 } from "@/components/(landing)/TeamMembers";
+import Image from "next/image";
 // import CybotixxStats, { CybotixxStatsSkeleton } from "@/components/(landing)/CybotixxStats";
 
 const HomePage = () => {
@@ -143,8 +144,8 @@ const HomePage = () => {
         <section className="space-y-12">
           <div className="text-center space-y-6">
             <div className="flex justify-center">
-              <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center shadow-lg">
-                <Code className="w-12 h-12 text-white" />
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg relative">
+                <Image src={"/logo.png"} alt="cybotixx-logo" fill className="" />
               </div>
             </div>
             <div>

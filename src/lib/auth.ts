@@ -4,6 +4,7 @@ import { db } from "@/lib/db/db"; // your drizzle instance
 import { nextCookies } from "better-auth/next-js";
 import { admin } from "better-auth/plugins"
 import * as schema from "@/lib/db/schema";
+import { headers } from "next/headers";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -40,3 +41,5 @@ export const auth = betterAuth({
         admin(),
     ]
 });
+
+export const getServerSession = async () => await auth.api.getSession({ headers: await headers() });

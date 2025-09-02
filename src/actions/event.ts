@@ -16,6 +16,7 @@ export const getEventsAction = async () => {
                 },
             },
         },
+        orderBy: (fields, operators) => operators.desc(fields.scheduled),
     });
     return results ?? [];
 };

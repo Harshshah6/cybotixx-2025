@@ -51,6 +51,11 @@ export default function RenderEnrollmentStatus({
         return;
       }
 
+      if (event.participants.length == event.max_participants) {
+        toast("Participant slots are full!");
+        return;
+      }
+
       setIsLoading(true);
       const result = await enrollForAnEventAction(event.id);
       if (result.ok) {

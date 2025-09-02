@@ -32,8 +32,8 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                         <div className="flex items-center justify-between">
                             {/* Logo */}
                             <Link href="/" className="flex items-center space-x-3 group">
-                                <div className="w-10 h-10 relative rounded-xl flex items-center justify-center">
-                                    <Image src={"/logo.png"} alt='cybotixx-logo' fill className="w-6 h-6 text-white" />
+                                <div className="size-10 relative rounded-xl flex items-center justify-center">
+                                    <Image src={"/logo.png"} alt='cybotixx-logo' width={40} height={40} className="text-white" />
                                 </div>
                                 <div>
                                     <h1 className="text-2xl font-bold text-primary">
@@ -113,7 +113,7 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                         <div className="flex flex-col md:flex-row items-center justify-between">
                             <div className="flex items-center space-x-3 mb-4 md:mb-0">
                                 <div className="w-10 h-10 relative rounded-xl flex items-center justify-center">
-                                    <Image src={"/logo.png"} alt='cybotixx-logo' fill className="w-6 h-6 text-white" />
+                                    <Image src={"/logo.png"} alt='cybotixx-logo' width={40} height={40} className="text-white" />
                                 </div>
                                 <span className="text-sm text-muted-foreground">
                                     © {new Date().getFullYear()} Cybotixx - Forum.

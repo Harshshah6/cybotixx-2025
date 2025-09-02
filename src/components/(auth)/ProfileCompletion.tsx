@@ -5,10 +5,10 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Code2 } from 'lucide-react'
 import { userProfileCompleteAction } from '@/actions/user'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import Image from 'next/image'
 
 interface ProfileData {
     rollNumber: string
@@ -58,8 +58,8 @@ export const ProfileCompletion = () => {
                 {/* Logo */}
                 <div className="text-center">
                     <div className="inline-flex items-center space-x-3">
-                        <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg">
-                            <Code2 className="w-7 h-7 text-white" />
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow border relative">
+                            <Image src={"/logo.png"} alt='cybotixx-logo' fill />
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold text-primary">CYBOTIXX</h1>
@@ -69,7 +69,7 @@ export const ProfileCompletion = () => {
                 </div>
 
                 {/* Profile Completion Form */}
-                <Card className="shadow-xl border-0 bg-card/95 backdrop-blur-sm">
+                <Card className="shadow border bg-card backdrop-blur-sm">
                     <CardHeader className="space-y-1">
                         <CardTitle className="text-2xl font-bold text-center">Complete Your Profile</CardTitle>
                         <CardDescription className="text-center">

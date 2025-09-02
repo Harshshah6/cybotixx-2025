@@ -5,6 +5,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export const formateEventDate = (date: Date) => {
+  return date.toLocaleTimeString([], { timeZone: "UTC", hour: '2-digit', minute: '2-digit', hour12: true });
+}
+
 export function timeAgo(date: Date): string {
   const now = new Date()
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)

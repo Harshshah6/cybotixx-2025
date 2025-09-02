@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
-import { Code2 } from 'lucide-react'
+import Image from 'next/image';
 import React, { } from 'react'
 import Link from 'next/link';
 import GoogleLoginButton from '@/components/(auth)/GoogleLoginButton';
@@ -12,8 +12,8 @@ export default function Page() {
                 {/* Logo */}
                 <div className="text-center">
                     <Link href="/" className="inline-flex items-center space-x-3 group">
-                        <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center transition-transform duration-300 shadow-lg">
-                            <Code2 className="w-7 h-7 text-white" />
+                        <div className="w-12 h-12 rounded-xl relative flex items-center justify-center transition-transform duration-300 shadow-lg">
+                            <Image src={"/logo.png"} alt="cybotixx-logo" fill className="" />
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold text-primary">CYBOTIXX</h1>

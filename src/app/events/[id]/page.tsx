@@ -1,10 +1,11 @@
 import { use } from 'react'
-import { Calendar, Users, ArrowLeft, CheckCircle, AlertCircle, Star, Medal } from 'lucide-react'
+import { Calendar, Users, ArrowLeft, CheckCircle, Star, Medal } from 'lucide-react'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import Link from 'next/link'
 import RenderEnrollmentStatus from '@/components/(events)/RenderEnrollmentStatus'
 import { getEventByIdAction } from '@/actions/event'
 import React from 'react'
+import { formateEventDate } from '@/lib/utils'
 
 const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
     const { id } = use(params);
@@ -45,7 +46,8 @@ const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
                                         <div className="cyber-card text-center py-4">
                                             <Calendar className="w-6 h-6 text-primary mx-auto mb-2" />
                                             <div className="text-sm font-medium text-foreground">{event.scheduled.toDateString()}</div>
-                                            <div className="text-xs text-muted-foreground">{event.scheduled.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
+                                            <div className="text-xs text-muted-foreground">Event Schedule</div>
+                                            {/* <div className="text-xs text-muted-foreground">{formateEventDate(event.scheduled)}</div> */}
                                         </div>
                                         <div className="cyber-card text-center py-4">
                                             <Users className="w-6 h-6 mx-auto mb-2" />
@@ -84,14 +86,12 @@ const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
                                 <div className="cyber-card">
                                     <h2 className="text-2xl font-semibold text-foreground mb-4">Event Schedule</h2>
                                     <div className="space-y-4">
-                                        {/* {event.schedule.map((item, index) => (
-                                            <div key={index} className="flex items-center gap-4 p-3 bg-muted/30 rounded-lg">
-                                                <div className="text-primary font-mono text-sm bg-primary/10 px-3 py-1 rounded">
-                                                    {item.time}
-                                                </div>
-                                                <div className="text-foreground">{item.activity}</div>
+                                        <div className="flex items-center gap-4 p-3 bg-muted/30 rounded-lg">
+                                            <div className="text-primary uppercase font-mono text-sm bg-primary/10 px-3 py-1 rounded">
+                                                {formateEventDate(event.scheduled)}
                                             </div>
-                                        ))} */}
+                                            <div className="text-foreground">Commencement Of Event</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@ const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
                                     </ul>
                                 </div>
 
-                                <div className="cyber-card">
+                                {/* <div className="cyber-card">
                                     <h3 className="text-xl font-semibold text-foreground mb-4">Requirements</h3>
                                     <ul className="space-y-2">
                                         {(event.requirements ?? "").split("\n").map((req, index) => (
@@ -129,7 +129,7 @@ const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
                                             </React.Fragment>
                                         ))}
                                     </ul>
-                                </div>
+                                </div> */}
 
                                 <div className="cyber-card">
                                     <h3 className="text-xl font-semibold text-foreground mb-4">Topics Covered</h3>

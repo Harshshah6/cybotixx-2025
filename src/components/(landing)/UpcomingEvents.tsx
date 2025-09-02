@@ -1,11 +1,11 @@
-import type { EventBase } from '@/types/db-tables.types'
+import type { EventWithRelations } from '@/types/db-tables.types'
 import React, { use } from 'react'
 import { Users, Calendar } from "lucide-react";
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Skeleton } from '../ui/skeleton';
 
-export default function UpcomingEvents({ events: eventsPromise }: { events: Promise<EventBase[]> }) {
+export default function UpcomingEvents({ events: eventsPromise }: { events: Promise<EventWithRelations[]> }) {
     const events = use(eventsPromise).slice(0, 4);
     return (
         <>
@@ -33,7 +33,7 @@ export default function UpcomingEvents({ events: eventsPromise }: { events: Prom
                         </div>
                         <div className="flex items-center">
                             <Users className="w-4 h-4 mr-2" />
-                            {event.max_participants} participants
+                            {event.participants.length}/{event.max_participants} participants
                         </div>
                         <span className={`border rounded-xl px-3 py-1 text-xs`}>
                             {event.event_status === 'ongoing' ? '🔴 Live' : '⏳ Upcoming'}

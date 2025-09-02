@@ -19,7 +19,7 @@ export default function RenderEnrollmentStatus({
   const [isEnrolled, setIsEnrolled] = useState(false);
   const router = useRouter();
   const { data, isPending } = useSession();
-  const {setIsLoading} = useLoaderContext();
+  const { setIsLoading } = useLoaderContext();
 
   if (isPending) {
     return <></>;
@@ -46,6 +46,16 @@ export default function RenderEnrollmentStatus({
     }
 
     const handleEnrollButton = async () => {
+      if (!data?.user) {
+        router.push("/sign-in");
+        return;
+      }
+
+      if (event.participants.length == event.max_participants) {
+        toast("Participant slots are full!");
+        return;
+      }
+
       setIsLoading(true);
       const result = await enrollForAnEventAction(event.id);
       if (result.ok) {

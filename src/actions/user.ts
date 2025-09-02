@@ -1,16 +1,13 @@
 'use server';
 
-import { auth } from "@/lib/auth";
+import { getServerSession } from "@/lib/auth";
 import { db } from "@/lib/db/db";
 import { user } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { headers } from "next/headers";
 
 export const userProfileCompleteAction = async (data: { roll_number: string; phone_number: string, sem: number }) => {
     try {
-        const s = await auth.api.getSession({
-            headers: await headers()
-        })
+        const s = await getServerSession();
         const cur_user = s?.user;
 
         if (!cur_user) return { ok: false }

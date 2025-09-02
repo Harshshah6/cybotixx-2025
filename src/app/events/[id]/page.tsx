@@ -6,8 +6,34 @@ import RenderEnrollmentStatus from '@/components/(events)/RenderEnrollmentStatus
 import { getEventByIdAction } from '@/actions/event'
 import React from 'react'
 import { formateEventDate } from '@/lib/utils'
+import { Metadata } from 'next'
 
-const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
+type Props = {
+    params: Promise<{ id: number }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { id } = await (params);
+    const event = await (getEventByIdAction(id));
+    if (!event?.title) { return {} }
+    const urlLoc = new URL(`${process.env.BETTER_AUTH_URL}/events/${id}`);
+    return {
+        title: event.title + " - Cybotixx",
+        description: event.description,
+        openGraph: {
+            title: event.title + " - Cybotixx",
+            description: event.description,
+            siteName: "Cybotixx - BCA Forum",
+            url: urlLoc
+        },
+        applicationName: "Cybotixx - BCA Forum",
+        alternates: {
+            canonical: urlLoc
+        },
+    }
+}
+
+const EventDetail = ({ params }: Props) => {
     const { id } = use(params);
     const event = use(getEventByIdAction(id));
 
@@ -32,7 +58,7 @@ const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
                                         <h1 className="text-3xl lg:text-4xl font-bold text-foreground">
                                             {event.title}
                                         </h1>
-                                        <span className={`badge-${event.event_status}`}>
+                                        <span className={`badge - ${event.event_status}`}>
                                             {event.event_status === 'ongoing' ? 'Live' :
                                                 event.event_status === 'upcoming' ? 'Upcoming' : 'Ended'}
                                         </span>
@@ -43,23 +69,23 @@ const EventDetail = ({ params }: { params: Promise<{ id: number }> }) => {
                                     </p> */}
 
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                        <div className="cyber-card text-center py-4">
+                                        <div className="cyber-card text-center py-4 flex flex-col items-center justify-center">
                                             <Calendar className="w-6 h-6 text-primary mx-auto mb-2" />
                                             <div className="text-sm font-medium text-foreground">{event.scheduled.toDateString()}</div>
                                             <div className="text-xs text-muted-foreground">Event Schedule</div>
                                             {/* <div className="text-xs text-muted-foreground">{formateEventDate(event.scheduled)}</div> */}
                                         </div>
-                                        <div className="cyber-card text-center py-4">
+                                        <div className="cyber-card text-center py-4 flex flex-col items-center justify-center">
                                             <Users className="w-6 h-6 mx-auto mb-2" />
                                             <div className="text-sm font-medium text-foreground">{(event.participants.length ?? 1)}/{event.max_participants}</div>
                                             <div className="text-xs text-muted-foreground">Participants</div>
                                         </div>
-                                        <div className="cyber-card text-center py-4">
+                                        <div className="cyber-card text-center py-4 flex flex-col items-center justify-center">
                                             <Medal className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
                                             <div className="text-sm font-medium text-foreground">Prize</div>
                                             <div className="text-xs text-muted-foreground">Certificate</div>
                                         </div>
-                                        <div className="cyber-card text-center py-4">
+                                        <div className="cyber-card text-center py-4 flex flex-col items-center justify-center">
                                             <Star className="w-6 h-6 text-orange-400 mx-auto mb-2" />
                                             <div className="text-sm font-medium text-foreground">{event.difficulty}</div>
                                             <div className="text-xs text-muted-foreground">Difficulty</div>

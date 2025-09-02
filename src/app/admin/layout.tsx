@@ -7,6 +7,9 @@ export default async function layout({ children }: { children: React.ReactNode }
     if (!session?.user) {
         redirect("/");
     }
+    if (session.user.role != "admin") {
+        redirect("/");
+    }
     return (
         <div>{children}</div>
     )

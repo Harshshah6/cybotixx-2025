@@ -53,8 +53,8 @@ async function FetchAnnouncements() {
                     <div
                         key={announcement.id}
                         className={cn(
-                            `bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4 transition-all duration-300 ${getPriorityColor(announcement.importance_level)} hover:shadow-md transition-all duration-200`,
-                            'hover:from-blue-100 hover:to-purple-100 hover:border-blue-300'
+                            `bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4 transition-all duration-300 ${getPriorityColor(announcement.importance_level)} hover:shadow transition-all duration-200`,
+                            // 'hover:from-blue-100 hover:to-purple-100 hover:border-blue-300'
                         )}
                     >
                         <div className="flex items-start space-x-3">

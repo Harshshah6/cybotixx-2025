@@ -14,12 +14,15 @@ export const getEventsAction = async () => {
                 with: {
                     user: true,
                 },
+                orderBy: (field, { asc }) => asc(field.prize),
             },
         },
-        orderBy: (fields, operators) => operators.desc(fields.scheduled),
+        orderBy: (fields, operators) => operators.asc(fields.scheduled),
     });
     return results ?? [];
 };
+
+export type getEventsActionReturnType = Awaited<ReturnType<typeof getEventsAction>>[number]
 
 export const getEventByIdAction = async (id: number) => {
     const result = await db.query.event.findFirst({

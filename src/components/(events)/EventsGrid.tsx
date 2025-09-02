@@ -4,9 +4,9 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Calendar, Clock, Users, Trophy, Award, ArrowRight, Zap } from 'lucide-react';
 import { useQueryState, parseAsString } from 'nuqs';
-import type { EventWithRelations } from '@/types/db-tables.types';
+import { getEventsActionReturnType } from '@/actions/event';
 
-export default function EventsGrid({ events: eventsPromise, fallBack }: { events: Promise<EventWithRelations[]>, fallBack: React.JSX.Element }) {
+export default function EventsGrid({ events: eventsPromise, fallBack }: { events: Promise<getEventsActionReturnType[]>, fallBack: React.JSX.Element }) {
     const events = use(eventsPromise);
     const [searchTerm] = useQueryState('searchTerm', parseAsString.withDefault(""));
     const [filterStatus] = useQueryState('filterStatus', parseAsString.withDefault("all"));
@@ -140,15 +140,15 @@ export default function EventsGrid({ events: eventsPromise, fallBack }: { events
                                     //     </div>
                                     //     <span className="text-muted-foreground">{winner.score} pts</span>
                                     // </div>
-                                    <div key={winner.id} className="flex items-center justify-between text-sm">
+                                    <div key={i} className="flex items-center justify-between text-sm">
                                         <div className="flex items-center">
-                                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 ${i + 1 === 1 ? 'bg-yellow-400 text-black' :
-                                                i + 1 === 2 ? 'bg-gray-300 text-black' :
+                                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 ${winner.prize === 1 ? 'bg-yellow-400 text-black' :
+                                                winner.prize === 2 ? 'bg-gray-300 text-black' :
                                                     'bg-orange-400 text-black'
                                                 }`}>
-                                                {i + 1}
+                                                {winner.prize}
                                             </div>
-                                            <span className="text-foreground font-medium">{winner.userId}</span>
+                                            <span className="text-foreground font-medium">{winner.user.name}</span>
                                         </div>
                                     </div>
                                 ))}

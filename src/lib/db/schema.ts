@@ -116,7 +116,7 @@ export const winners = pgTable('winners', {
     id: serial('id').primaryKey(),
     userId: text('user_id').notNull().references(() => user.id),
     eventId: integer('event_id').notNull().references(() => event.id),
-    prize: text('prize').notNull(),
+    prize: integer('prize').notNull(),
 });
 
 export const participants = pgTable('participants', {

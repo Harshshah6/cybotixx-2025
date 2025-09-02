@@ -77,7 +77,7 @@ const HomePage = () => {
                 return (
                   <div
                     key={feature.title}
-                    className="hover:border-primary/30 flex flex-col items-center justify-center hover:shadow-lg bg-card border rounded-xl p-6 duration-300 shadow-sm text-center hover:scale-101"
+                    className="hover:border-primary/30 flex flex-col items-center justify-center hover:shadow-lg bg-card border rounded-xl p-6 duration-300 shadow-sm text-center"
                     style={{ animationDelay: `${0.5 + index * 0.1}s` }}
                   >
                     <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4 shadow-md">

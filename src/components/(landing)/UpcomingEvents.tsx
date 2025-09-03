@@ -5,6 +5,8 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Skeleton } from '../ui/skeleton';
 
+export const revalidate = 0;
+
 export default function UpcomingEvents({ events: eventsPromise }: { events: Promise<EventWithRelations[]> }) {
     const events = use(eventsPromise).slice(0, 4);
     return (

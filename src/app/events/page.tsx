@@ -5,6 +5,8 @@ import { Search } from 'lucide-react';
 import { Suspense } from 'react';
 import { getEventsAction } from '@/actions/event';
 
+export const dynamic = "force-dynamic";
+
 const Events = () => {
     return (
         <LayoutWrapper>

@@ -8,6 +8,8 @@ import React from 'react'
 import { formateEventDate } from '@/lib/utils'
 import { Metadata } from 'next'
 
+export const revalidate = 0;
+
 type Props = {
     params: Promise<{ id: number }>
 }

@@ -9,14 +9,13 @@ import { LandingPageConstants } from "@/lib/constants";
 import UpcomingEvents, {
   UpcomingEventsSkeleton,
 } from "@/components/(landing)/UpcomingEvents";
-import { getEventsAction } from "@/actions/event";
 import { getTeamsAction } from "@/actions/team";
 import TeamMembers, {
   TeamMembersSkeleton,
 } from "@/components/(landing)/TeamMembers";
 import Image from "next/image";
+import { client } from "@/lib/orpc";
 // import CybotixxStats, { CybotixxStatsSkeleton } from "@/components/(landing)/CybotixxStats";
-
 
 const HomePage = () => {
   return (
@@ -123,7 +122,7 @@ const HomePage = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Suspense fallback={<UpcomingEventsSkeleton />}>
-              <UpcomingEvents events={getEventsAction()} />
+              <UpcomingEvents events={client.events.listEvents()} />
             </Suspense>
           </div>
 

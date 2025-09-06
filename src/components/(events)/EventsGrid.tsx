@@ -2,7 +2,7 @@
 import React, { use } from 'react'
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { Calendar, Clock, Users, Trophy, Award, ArrowRight, Zap } from 'lucide-react';
+import { Calendar, Clock, Users, Trophy, ArrowRight, Zap } from 'lucide-react';
 import { useQueryState, parseAsString } from 'nuqs';
 import { getEventsActionReturnType } from '@/actions/event';
 
@@ -118,43 +118,6 @@ export default function EventsGrid({ events: eventsPromise, fallBack }: { events
                             )}
                         </div>
                     </div>
-
-                    {/* Winners Section (for completed events) */}
-                    {event.event_status === 'completed' && event.winners.length > 0 && (
-                        <div className="px-6 py-4 bg-muted/30 border-t border-border">
-                            <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center">
-                                <Award className="w-4 h-4 mr-2 text-yellow-500" />
-                                Top Winners
-                            </h4>
-                            <div className="space-y-2">
-                                {event.winners.slice(0, 3).map((winner, i) => (
-                                    // <div key={winner.rank} className="flex items-center justify-between text-sm">
-                                    //     <div className="flex items-center">
-                                    //         <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 ${winner.rank === 1 ? 'bg-yellow-400 text-black' :
-                                    //             winner.rank === 2 ? 'bg-gray-300 text-black' :
-                                    //                 'bg-orange-400 text-black'
-                                    //             }`}>
-                                    //             {winner.rank}
-                                    //         </div>
-                                    //         <span className="text-foreground font-medium">{winner.name}</span>
-                                    //     </div>
-                                    //     <span className="text-muted-foreground">{winner.score} pts</span>
-                                    // </div>
-                                    <div key={i} className="flex items-center justify-between text-sm">
-                                        <div className="flex items-center">
-                                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 ${winner.prize === 1 ? 'bg-yellow-400 text-black' :
-                                                winner.prize === 2 ? 'bg-gray-300 text-black' :
-                                                    'bg-orange-400 text-black'
-                                                }`}>
-                                                {winner.prize}
-                                            </div>
-                                            <span className="text-foreground font-medium">{winner.user.name}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
 
                     {/* Action Button */}
                     <div className="p-6 pt-0">

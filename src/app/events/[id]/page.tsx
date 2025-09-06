@@ -1,5 +1,5 @@
 import { use } from 'react'
-import { Calendar, Users, ArrowLeft, CheckCircle, Star, Medal } from 'lucide-react'
+import { Calendar, Users, ArrowLeft, CheckCircle, Star, Medal, Award } from 'lucide-react'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import Link from 'next/link'
 import RenderEnrollmentStatus from '@/components/(events)/RenderEnrollmentStatus'
@@ -103,7 +103,7 @@ const EventDetail = ({ params }: Props) => {
                             <div className="lg:col-span-2 space-y-8">
                                 <div className="cyber-card">
                                     <h2 className="text-2xl font-semibold text-foreground mb-4">About This Event</h2>
-                                    <div className="prose prose-invert max-w-none">
+                                    <div className="max-w-none">
                                         {event.description.split('\n\n').map((paragraph, index) => (
                                             <p key={index} className="text-muted-foreground mb-4 leading-relaxed">
                                                 {paragraph}
@@ -111,6 +111,31 @@ const EventDetail = ({ params }: Props) => {
                                         ))}
                                     </div>
                                 </div>
+
+                                {event.event_status === 'completed' && event.winners.length > 0 && (
+                                    <div className='cyber-card'>
+                                        <h4 className="text-2xl font-semibold text-foreground mb-4 flex items-center">
+                                            <Award className="size-8 mr-2 text-yellow-500" />
+                                            Top Winners
+                                        </h4>
+                                        <div className="space-y-2">
+                                            {event.winners.slice(0, 3).map((winner, i) => (
+                                                <div key={i} className="flex items-center justify-between text- capitalize">
+                                                    <div className="flex items-center">
+                                                        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 ${winner.prize === 1 ? 'bg-yellow-400 text-black' :
+                                                            winner.prize === 2 ? 'bg-gray-300 text-black' :
+                                                                'bg-orange-400 text-black'
+                                                            }`}>
+                                                            {winner.prize}
+                                                        </div>
+                                                        <span className="text-foreground font-medium">{winner.user.name}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="cyber-card">
                                     <h2 className="text-2xl font-semibold text-foreground mb-4">Event Schedule</h2>
                                     <div className="space-y-4">
@@ -123,6 +148,7 @@ const EventDetail = ({ params }: Props) => {
                                     </div>
                                 </div>
                             </div>
+
 
                             <div className="space-y-8">
                                 <div className="cyber-card">

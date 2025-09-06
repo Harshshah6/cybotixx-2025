@@ -1,9 +1,10 @@
 import LayoutWrapper from '@/components/LayoutWrapper'
 import SearchAndFilterSection from '@/components/(events)/SearchAndFilterSection';
 import EventsGrid from '@/components/(events)/EventsGrid';
-import { Search } from 'lucide-react';
+import { Loader, Search } from 'lucide-react';
 import { Suspense } from 'react';
-import { getEventsAction } from '@/actions/event';
+import { call } from '@orpc/server';
+import { listEvents } from '@/router/events';
 
 export const dynamic = "force-dynamic";
 
@@ -27,8 +28,8 @@ const Events = () => {
                 </Suspense>
 
                 {/* Events Grid */}
-                <Suspense>
-                    <EventsGrid events={getEventsAction()} fallBack={fallbackUI()} />
+                <Suspense fallback={loadingUI()}>
+                    <EventsGrid events={call(listEvents, {})} fallBack={fallbackUI()} />
                 </Suspense>
             </div>
         </LayoutWrapper>
@@ -45,6 +46,17 @@ function fallbackUI() {
             <p className="text-muted-foreground">
                 Try adjusting your search terms or filters to find more events.
             </p>
+        </div>
+    );
+}
+
+function loadingUI() {
+    return (
+        <div className="text-center py-16 bg-white rounded-xl border border-border">
+            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                <Loader className="w-8 h-8 animate-spin text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-semibold text-foreground mb-2">Loading Events...</h3>
         </div>
     );
 }

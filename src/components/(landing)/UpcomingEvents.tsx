@@ -1,14 +1,17 @@
-import type { EventWithRelations } from '@/types/db-tables.types'
-import React, { use } from 'react'
-import { Users, Calendar } from "lucide-react";
+// export const dynamic = "force-dynamic";
+
+import React from 'react'
+import { Users, Calendar, ArrowRight } from "lucide-react";
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Skeleton } from '../ui/skeleton';
+import { call } from '@orpc/server';
+import { listEvents } from '@/router/events';
 
-export const revalidate = 0;
+export const revalidate = 10;
 
-export default function UpcomingEvents({ events: eventsPromise }: { events: Promise<EventWithRelations[]> }) {
-    const events = use(eventsPromise).slice(0, 4);
+export default async function UpcomingEvents() {
+    const events = await call(listEvents, { caches: false, });
     return (
         <>
             {events.map((event, index) => (
@@ -38,16 +41,26 @@ export default function UpcomingEvents({ events: eventsPromise }: { events: Prom
                             {event.participants.length}/{event.max_participants} participants
                         </div>
                         <span className={`border rounded-xl px-3 py-1 text-xs`}>
-                            {event.event_status === 'ongoing' ? '🔴 Live' : '⏳ Upcoming'}
+                            {event.event_status === 'ongoing' ? '🔴 Live' : event.event_status === 'completed' ? "Event Completed" : '⏳ Upcoming'}
                         </span>
                     </div>
 
                     <Button
-                        className={`w-full ${event.event_status === 'ongoing' ? 'btn-cyber' : 'btn-outline-cyber'}`}
+                        className={`w-full ${event.event_status === 'ongoing' ? 'bg-green-600 hover:bg-green-700' :
+                            event.event_status === 'upcoming' ? '' :
+                                'bg-muted text-muted-foreground hover:bg-muted'
+                            }`}
+                        disabled={event.event_status === 'completed'}
                         asChild
                     >
-                        <Link href={`/events/${event.id}`}>
-                            {event.event_status === 'ongoing' ? 'Join Now' : 'Learn More'}
+                        <Link href={`/events/${event.id}`} className="block">
+                            {event.event_status === 'ongoing' ? (
+                                <>Join Live Event <ArrowRight className="w-4 h-4 ml-2" /></>
+                            ) : event.event_status === 'upcoming' ? (
+                                <>View Details <ArrowRight className="w-4 h-4 ml-2" /></>
+                            ) : (
+                                'Event Completed'
+                            )}
                         </Link>
                     </Button>
                 </div>

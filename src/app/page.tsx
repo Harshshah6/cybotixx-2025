@@ -9,13 +9,13 @@ import { LandingPageConstants } from "@/lib/constants";
 import UpcomingEvents, {
   UpcomingEventsSkeleton,
 } from "@/components/(landing)/UpcomingEvents";
-import { getTeamsAction } from "@/actions/team";
 import TeamMembers, {
   TeamMembersSkeleton,
 } from "@/components/(landing)/TeamMembers";
 import Image from "next/image";
-import { client } from "@/lib/orpc";
 // import CybotixxStats, { CybotixxStatsSkeleton } from "@/components/(landing)/CybotixxStats";
+
+export const dynamic = "force-dynamic";
 
 const HomePage = () => {
   return (
@@ -122,7 +122,7 @@ const HomePage = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Suspense fallback={<UpcomingEventsSkeleton />}>
-              <UpcomingEvents events={client.events.listEvents()} />
+              <UpcomingEvents />
             </Suspense>
           </div>
 
@@ -230,7 +230,7 @@ const HomePage = () => {
             <h3 className="text-3xl font-bold text-center">Meet Our Team</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Suspense fallback={<TeamMembersSkeleton />}>
-                <TeamMembers teams={getTeamsAction()} />
+                <TeamMembers />
               </Suspense>
             </div>
           </div>

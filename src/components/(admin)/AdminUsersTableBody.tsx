@@ -7,7 +7,6 @@ import { Button } from '../ui/button';
 
 export default function AdminUsersTableBody({ usersPromise }: { usersPromise: Promise<UserWithRelations[]> }) {
     const users = use(usersPromise);
-    console.log(users);
     
     return (
         <>

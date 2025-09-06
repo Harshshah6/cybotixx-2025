@@ -1,12 +1,13 @@
 import { TeamBase } from '@/types/db-tables.types'
-import React, { use } from 'react'
+import React from 'react'
 import { Card, CardContent } from '../ui/card';
 import { LandingPageConstants } from '@/lib/constants';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Badge } from '../ui/badge';
 
-export default function TeamMembers({ teams: teamsPromise }: { teams: Promise<TeamBase[]> }) {
-    const teams = use(teamsPromise);
+export default function TeamMembers({ }: { teams?: Promise<TeamBase[]> }) {
+    // const teams = use(teamsPromise);
+    const teams = LandingPageConstants.teamMembers;
     return (
         <>
             {

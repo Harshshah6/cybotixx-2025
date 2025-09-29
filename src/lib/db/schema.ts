@@ -106,6 +106,8 @@ export const event = pgTable("event", {
     scheduled: timestamp("scheduled", { withTimezone: true }).notNull(),
     difficulty: difficultyEnum(),
     max_participants: integer("max_participants"),
+    max_group_size: integer("max_group_size").default(0), // 👈 NEW: Max size per group
+    is_group_event: boolean("is_group_event").default(false).notNull(), // 👈 NEW
     rules_and_guidelines: text("rules_and_guidelines"),
     event_status: eventStatusEnum().default("ongoing").notNull(),
     requirements: text("requirements"),
@@ -125,6 +127,25 @@ export const participants = pgTable('participants', {
     eventId: integer('event_id').notNull().references(() => event.id),
 });
 
+// Group Table
+export const group = pgTable("group", {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 255 }).notNull(), // Group/team name
+    eventId: integer("event_id").notNull().references(() => event.id, { onDelete: "cascade" }),
+    topic: text().notNull().default(""),
+    leaderId: text("leader_id").references(() => user.id), // Optional: group leader
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+// Group Participants Table
+export const groupParticipants = pgTable("group_participants", {
+    id: serial("id").primaryKey(),
+    groupId: integer("group_id").notNull().references(() => group.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+    joinedAt: timestamp("joined_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 
 
 ////////////////////////////////////////////////
@@ -139,6 +160,7 @@ export const usersRelations = relations(user, ({ many }) => ({
 export const eventsRelations = relations(event, ({ many }) => ({
     participants: many(participants),
     winners: many(winners),
+    groups: many(group), // 👈 NEW
 }));
 
 export const participantsRelations = relations(participants, ({ one }) => ({
@@ -149,4 +171,15 @@ export const participantsRelations = relations(participants, ({ one }) => ({
 export const winnersRelations = relations(winners, ({ one }) => ({
     user: one(user, { fields: [winners.userId], references: [user.id] }),
     event: one(event, { fields: [winners.eventId], references: [event.id] }),
+}));
+
+export const groupRelations = relations(group, ({ one, many }) => ({
+    event: one(event, { fields: [group.eventId], references: [event.id] }),
+    leader: one(user, { fields: [group.leaderId], references: [user.id] }),
+    members: many(groupParticipants),
+}));
+
+export const groupParticipantsRelations = relations(groupParticipants, ({ one }) => ({
+    group: one(group, { fields: [groupParticipants.groupId], references: [group.id] }),
+    user: one(user, { fields: [groupParticipants.userId], references: [user.id] }),
 }));

@@ -12,6 +12,7 @@ export const getParticipantsAction = async () => {
         with: {
           participants: true,
           winners: true,
+          groups: true,
         },
       },
       user: {

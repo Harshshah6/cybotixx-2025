@@ -10,6 +10,15 @@ export const getEventsAction = async () => {
                     user: true,
                 },
             },
+            groups: {
+                with: {
+                    members: {
+                        with: {
+                            user: true,
+                        }
+                    },
+                }
+            },
             winners: {
                 with: {
                     user: true,
@@ -32,6 +41,15 @@ export const getEventByIdAction = async (id: number) => {
                 with: {
                     user: true,
                 },
+            },
+            groups: {
+                with: {
+                    members: {
+                        with: {
+                            user: true,
+                        }
+                    },
+                }
             },
             winners: {
                 with: {

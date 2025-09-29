@@ -1,5 +1,6 @@
+import { getEventByIdAction } from "@/actions/event";
 import { getParticipantsAction } from "@/actions/participants";
-import { event, announcement, participants, team, user, winners } from "@/lib/db/schema";
+import { event, announcement, participants, team, user, winners, group, groupParticipants } from "@/lib/db/schema";
 
 type WithRelations<T, R> = T & R;
 
@@ -21,12 +22,25 @@ export type TeamInsert = typeof team.$inferInsert;
 export type UserBase = typeof user.$inferSelect;
 export type UserInsert = typeof user.$inferInsert;
 
+export type groupBase = typeof group.$inferSelect;
+export type groupInsert = typeof group.$inferInsert;
+
+export type groupParticipantsBase = typeof groupParticipants.$inferSelect;
+export type groupParticipantsInsert = typeof groupParticipants.$inferInsert;
+
 
 export type ParticipantsWithRelations = Awaited<ReturnType<typeof getParticipantsAction>>[number];
 
 export type WinnerWithRelations = WithRelations<WinnerBase, { user: UserBase; event: EventBase }>;
 
-export type EventWithRelations = WithRelations<EventBase, { participants: ParticipantBase[]; winners: WinnerBase[] }>;
+// export type EventWithRelations = WithRelations<EventBase, {
+//     participants: ParticipantBase[]; 
+//     winners: WinnerBase[],
+//     groups: WithRelations<groupBase, {
+//         members: WithRelations<groupParticipantsBase, & { user: UserBase }>
+//     }>
+// }>;
 
-export type UserWithRelations = WithRelations<UserBase, { participants: ParticipantBase[]; winners: WinnerBase[] }
->;
+export type EventWithRelations = Awaited<ReturnType<typeof getEventByIdAction>>
+
+export type UserWithRelations = WithRelations<UserBase, { participants: ParticipantBase[]; winners: WinnerBase[] }>;

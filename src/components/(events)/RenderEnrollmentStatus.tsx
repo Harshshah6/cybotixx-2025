@@ -21,7 +21,7 @@ export default function RenderEnrollmentStatus({
   const { data, isPending } = useSession();
   const { setIsLoading } = useLoaderContext();
 
-  if (isPending) {
+  if (isPending || !event) {
     return <></>;
   }
 
@@ -89,25 +89,23 @@ export default function RenderEnrollmentStatus({
             <div className="flex justify-between">
               <span>Spots Available:</span>
               <span className="text-primary font-medium">
-                {(event.max_participants ?? event.participants.length + 1) -
-                  event.participants.length}
+                {
+                  (event.max_participants ?? event.participants.length + 1) - event.participants.length
+                }
               </span>
             </div>
             <div className="w-full bg-muted rounded-full h-2">
               <div
                 className="h-2 bg-gradient-to-r from-primary to-accent rounded-full"
                 style={{
-                  width: `${(event.participants.length /
-                    (event.max_participants ?? 1)) *
-                    100
-                    }%`,
+                  width: `${(event.participants.length / (event.max_participants ?? 1)) * 100}%`,
                 }}
               />
             </div>
           </div>
           <Button
             className="btn-cyber w-full cursor-pointer"
-            onClick={handleEnrollButton}
+            onClick={() => event.is_group_event ? setShowEnrollForm(true) : handleEnrollButton}
           >
             Enroll Now
           </Button>

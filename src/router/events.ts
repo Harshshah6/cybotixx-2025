@@ -9,6 +9,15 @@ export const listEvents = os.handler(async ({ }) => {
                     user: true,
                 },
             },
+            groups: {
+                with: {
+                    members: {
+                        with: {
+                            user: true,
+                        }
+                    },
+                }
+            },
             winners: {
                 with: {
                     user: true,

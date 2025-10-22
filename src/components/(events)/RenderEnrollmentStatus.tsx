@@ -105,7 +105,7 @@ export default function RenderEnrollmentStatus({
           </div>
           <Button
             className="btn-cyber w-full cursor-pointer"
-            onClick={() => event.is_group_event ? setShowEnrollForm(true) : handleEnrollButton}
+            onClick={() => { if(event.is_group_event) setShowEnrollForm(true) else handleEnrollButton()}}
           >
             Enroll Now
           </Button>
@@ -160,3 +160,4 @@ export default function RenderEnrollmentStatus({
     </>
   );
 }
+

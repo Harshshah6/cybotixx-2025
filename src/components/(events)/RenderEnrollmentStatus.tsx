@@ -89,23 +89,32 @@ export default function RenderEnrollmentStatus({
             <div className="flex justify-between">
               <span>Spots Available:</span>
               <span className="text-primary font-medium">
-                {
-                  (event.max_participants ?? event.participants.length + 1) - event.participants.length
-                }
+                {(event.max_participants ?? event.participants.length + 1) -
+                  event.participants.length}
               </span>
             </div>
             <div className="w-full bg-muted rounded-full h-2">
               <div
                 className="h-2 bg-gradient-to-r from-primary to-accent rounded-full"
                 style={{
-                  width: `${(event.participants.length / (event.max_participants ?? 1)) * 100}%`,
+                  width: `${
+                    (event.participants.length /
+                      (event.max_participants ?? 1)) *
+                    100
+                  }%`,
                 }}
               />
             </div>
           </div>
           <Button
             className="btn-cyber w-full cursor-pointer"
-            onClick={() => { if(event.is_group_event) setShowEnrollForm(true) else handleEnrollButton()}}
+            onClick={() => {
+              if (event.is_group_event) {
+                setShowEnrollForm(true);
+              } else {
+                handleEnrollButton();
+              }
+            }}
           >
             Enroll Now
           </Button>
@@ -123,7 +132,10 @@ export default function RenderEnrollmentStatus({
           <p className="text-sm text-muted-foreground">
             The event has already started. Contact organizers for late entry.
           </p>
-          <Button className="btn-cyber w-full animate-pulse-glow" onClick={handleEnrollButton}>
+          <Button
+            className="btn-cyber w-full animate-pulse-glow"
+            onClick={handleEnrollButton}
+          >
             Join Live Event
           </Button>
         </div>
@@ -160,4 +172,3 @@ export default function RenderEnrollmentStatus({
     </>
   );
 }
-
